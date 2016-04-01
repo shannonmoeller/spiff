@@ -9,7 +9,7 @@ import isNull from 'vinyl/lib/isNull';
 
 /**
  * @class Bside
- * @extends  Vinyl
+ * @extends Vinyl
  */
 export default class Bside extends Vinyl {
 	/**
@@ -39,8 +39,8 @@ export default class Bside extends Vinyl {
 
 		let contents = this.contents;
 
-		if (contents.length > 42) {
-			contents = `${contents.slice(0, 39)}...`;
+		if (contents.length > 40) {
+			contents = `${contents.slice(0, 37)}...`;
 		}
 
 		contents = JSON.stringify(contents);

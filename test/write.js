@@ -1,7 +1,13 @@
 import test from 'ava';
-import { write } from '../src/spiff';
+import { read, write } from '../src/spiff';
 
-test('should write files', async assert => {
-	console.log(write);
-	assert.ok(true);
+test('should read multiple globbed files', async assert => {
+	return read('fixtures/**/*.txt', {})
+		.map(file => {
+			file.contents = `actual ${file.contents}`;
+
+			return file;
+		})
+		.map(write('actual'))
+		.then(() => assert.ok(true));
 });

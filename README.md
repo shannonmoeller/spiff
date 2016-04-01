@@ -63,20 +63,20 @@ read('src/**/*.png', { encoding: null })
 
 - `options` `Object`
 
-Creates a `Bside` file.
+Creates a [`Bside`](#Bside) file.
 
-### read(glob, [options]) : ListPromise<Array<Bside>>
+### read(glob, [options]) : ListPromise\<Array\<Bside\>\>
 
 - `glob` `String|Array<String>`
-- `options` `Object`
+- `options` `Object` Options for `fs.readFile` and [`globby`](https://github.com/sindresorhus/globby).
   - `encoding` `{String}` (default: `'utf8'`) File encoding. Set to `null` to use Buffers instead of Strings.
 
 Finds files matching a glob pattern and provides them as an array of `bside` objects.
 
 ### write([dir], [options]) : Function(files)
 
-- `dir` `String`
-- `options` `Object`
+- `dir` `String` Optional alternate directory in which to write the files. By default, files will be saved to their current `.path` value.
+- `options` `Object` Options for `fs.writeFile`.
 
 Generates a callback that accepts one or more `bside` files and writes them back to disk, optionally in a different location.
 

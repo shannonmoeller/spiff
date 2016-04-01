@@ -2,6 +2,7 @@
 coverage/
 lib/
 node_modules/
+test/actual/
 
 *.log
 *.swp

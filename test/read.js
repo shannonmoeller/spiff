@@ -2,13 +2,39 @@ import test from 'ava';
 import { read } from '../src/spiff';
 
 test('should read a file', async assert => {
-	return read('fixtures/a.txt', 'utf8')
-		.then(files => console.log(files))
-		.then(() => assert.ok(true));
+	const expected = /^<File "a.txt" "foo bar Lorem/;
+
+	return read('fixtures/a.txt')
+		.map(file => {
+			file.contents = `bar ${file.contents}`;
+
+			return file;
+		})
+		.map(file => {
+			file.contents = `foo ${file.contents}`;
+
+			return file;
+		})
+		.map(file => {
+			assert.ok(expected.test(file.inspect()));
+		});
 });
 
 test('should read multiple globbed files', async assert => {
-	return read('fixtures/**/*.txt', 'utf8')
-		.then(files => console.log(files))
-		.then(() => assert.ok(true));
+	const expected = /^<File "[^.]+.txt" "foo bar/;
+
+	return read('fixtures/**/*.txt')
+		.map(file => {
+			file.contents = `bar ${file.contents}`;
+
+			return file;
+		})
+		.map(file => {
+			file.contents = `foo ${file.contents}`;
+
+			return file;
+		})
+		.map(file => {
+			assert.ok(expected.test(file.inspect()));
+		});
 });
