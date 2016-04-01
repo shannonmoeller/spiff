@@ -20,7 +20,7 @@ read('src/**/*.html')
     .map(async file => {
         const json = await read(file.path + '.json');
 
-        file.data = JSON.parse(json);
+        file.data = JSON.parse(json[0]);
 
         return file;
     })

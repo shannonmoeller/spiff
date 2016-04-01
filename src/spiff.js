@@ -16,6 +16,12 @@ import Bside from './bside';
  * @return {Bside}
  */
 export function file(options) {
+	options = options || {};
+
+	if (typeof options === 'string') {
+		options = { path: options };
+	}
+
 	return new Bside(options);
 }
 
