@@ -19,9 +19,9 @@ import htmlMinifier from 'html-minifier';
 // One-to-one transmorgrification
 read('src/**/*.html')
     .map(async file => {
-        const [json] = await read(file.path + '.json');
+        const [data] = await read(file.path + '.json');
 
-        file.data = JSON.parse(json.contents);
+        file.data = JSON.parse(data.contents);
 
         return file;
     })
@@ -49,10 +49,10 @@ read('src/styles/*.css')
         return file;
     })
     .filter(file => file.contents.length > 20)
-    .reduce((newFile, oldFile) => {
-        newFile.contents += oldFile.contents;
+    .reduce((bundle, file) => {
+        bundle.contents += file.contents;
 
-        return newFile;
+        return bundle;
     }, file('styles/bundle.css'))
     .then(write('dest'));
 
@@ -88,14 +88,14 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list](
 
 ### write([dir], [options]) : Function(Bside)
 
-- `dir` `String` (default: `file.base`) Optional alternate directory in which to write the files. By default, files will be saved to their current `.path` value.
+- `dir` `String` (default: `file.base`) Optional alternate directory in which to write a file. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
 
-Generates a callback that accepts a [`Bside`](#bside) file and writes it back to disk, optionally in a different location.
+Generates a callback that accepts a [`Bside`](#bside) file and writes it to the disk, optionally in a different location. Returns the file so that you may continue iterating after writing.
 
 ## Bside
 
-A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support. No more need to convert to and from buffers unless you really want to.
+A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support. No more converting to and from buffers unless you really want to.
 
 ### .isString() : Boolean
 
