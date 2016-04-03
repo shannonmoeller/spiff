@@ -48,10 +48,11 @@ read('src/styles/*.css')
 
         return file;
     })
-    .reduce((a, b) => {
-        a.contents += b.contents;
+    .filter(file => file.contents.length > 20)
+    .reduce((newFile, oldFile) => {
+        newFile.contents += oldFile.contents;
 
-        return a;
+        return newFile;
     }, file('styles/bundle.css'))
     .then(write('dest'));
 
@@ -64,34 +65,41 @@ read('src/**/*.png', null).map(write('dest'));
 ### file(options) : Bside
 
 - `options` `Object`
+  - `cwd` `String` (default: `process.cwd()`) Current working directory.
+  - `base` `String` (default: `cwd`) Base path from which to derive relative paths.
+  - `path` `String` File path.
 
 Creates a [`Bside`](#bside) file.
 
-### find(glob, [options]) : ListPromise\<Array\<Bside\>\>
+### find(glob, [options]) : ListPromise\<Bside\>
 
 - `glob` `String|Array<String>`
 - `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby).
 
-Finds files matching a glob pattern and provides them as an array of `bside` objects. Does not read the files into memory.
+Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`Bside`](#bside) objects. Does not read file contents into memory.
 
-### read(glob, [options]) : ListPromise\<Array\<Bside\>\>
+### read(glob, [options]) : ListPromise\<Bside\>
 
 - `glob` `String|Array<String>`
 - `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
   - `encoding` `{String}` (default: `'utf8'`) File encoding. Set to `null` to use Buffers instead of Strings.
 
-Finds files matching a glob pattern and provides them as an array of `bside` objects and reads their contents into memory.
+Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`Bside`](#bside) objects. Reads file contents into memory.
 
-### write([dir], [options]) : Function(files)
+### write([dir], [options]) : Function(Bside)
 
-- `dir` `String` Optional alternate directory in which to write the files. By default, files will be saved to their current `.path` value.
+- `dir` `String` (default: `file.base`) Optional alternate directory in which to write the files. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
 
-Generates a callback that accepts one or more `bside` files and writes them back to disk, optionally in a different location.
+Generates a callback that accepts a [`Bside`](#bside) file and writes it back to disk, optionally in a different location.
 
-### Bside
+## Bside
 
-A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support.
+A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support. No more need to convert to and from buffers unless you really want to.
+
+### .isString() : Boolean
+
+Returns whether or not the current file contents are a string.
 
 ## Contribute
 
