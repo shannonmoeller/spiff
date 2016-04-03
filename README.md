@@ -81,12 +81,12 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list](
 ### read(glob, [options]) : ListPromise\<Bside\>
 
 - `glob` `String|Array<String>`
-- `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
+- `options` `Null|String|Object` If null or a string, value is used as the encoding when reading. If an object, options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
   - `encoding` `{String}` (default: `'utf8'`) File encoding. Set to `null` to use Buffers instead of Strings.
 
 Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`Bside`](#bside) objects. Reads file contents into memory.
 
-### write([dir], [options]) : Function(Bside)
+### write([dir, [options]]) : Function(Bside)
 
 - `dir` `String` (default: `file.base`) Optional alternate directory in which to write a file. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
