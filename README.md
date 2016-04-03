@@ -67,13 +67,20 @@ read('src/**/*.png', null).map(write('dest'));
 
 Creates a [`Bside`](#Bside) file.
 
+### find(glob, [options]) : ListPromise\<Array\<Bside\>\>
+
+- `glob` `String|Array<String>`
+- `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby).
+
+Finds files matching a glob pattern and provides them as an array of `bside` objects. Does not read the files into memory.
+
 ### read(glob, [options]) : ListPromise\<Array\<Bside\>\>
 
 - `glob` `String|Array<String>`
-- `options` `Object` Options for `fs.readFile` and [`globby`](https://github.com/sindresorhus/globby).
+- `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
   - `encoding` `{String}` (default: `'utf8'`) File encoding. Set to `null` to use Buffers instead of Strings.
 
-Finds files matching a glob pattern and provides them as an array of `bside` objects.
+Finds files matching a glob pattern and provides them as an array of `bside` objects and reads their contents into memory.
 
 ### write([dir], [options]) : Function(files)
 
