@@ -91,7 +91,7 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list](
 - `dir` `String` (default: `file.base`) Optional alternate directory in which to write a file. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
 
-Generates a callback that accepts a [`Bside`](#bside) file and writes it to the disk, optionally in a different location. Returns the file so that you may continue iterating after writing.
+Generates a callback that accepts a [`Bside`](#bside) file and writes it to the file system, optionally in a different location. Returns the file so that you may continue iterating after writing.
 
 ## Bside
 
