@@ -23,16 +23,13 @@
     "fs-promise": "^0.5.0",
     "glob-parent": "^2.0.0",
     "globby": "^4.0.0",
-    "is-glob": "^2.0.1",
     "list-promise": "^1.1.1",
-    "to-absolute-glob": "^0.1.1",
     "vinyl": "^1.1.1"
   },
   "devDependencies": {
     "ava": "^0.13.0",
     "babel-cli": "^6.6.5",
     "babel-plugin-async-to-promises": "^1.0.4",
-    "babel-plugin-rewire": "^1.0.0-rc-2",
     "babel-plugin-transform-object-assign": "^6.5.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-polyfill": "^6.7.4",
@@ -41,6 +38,7 @@
     "chokidar-cli": "^1.2.0",
     "coveralls": "^2.11.6",
     "nyc": "^6.0.0",
+    "rimraf": "^2.5.2",
     "xo": "^0.13.0"
   },
   "engines": {
