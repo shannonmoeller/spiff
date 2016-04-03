@@ -7,6 +7,8 @@ import isBuffer from 'vinyl/lib/isBuffer';
 import isStream from 'vinyl/lib/isStream';
 import isNull from 'vinyl/lib/isNull';
 
+const INSPECT_LENGTH = 40;
+
 /**
  * @class Bside
  * @extends Vinyl
@@ -19,7 +21,12 @@ export default class Bside extends Vinyl {
 		return this._contents;
 	}
 	set contents(val) {
-		if (typeof val !== 'string' && !isBuffer(val) && !isStream(val) && !isNull(val)) {
+		if (
+			typeof val !== 'string'
+			&& !isBuffer(val)
+			&& !isStream(val)
+			&& !isNull(val)
+		) {
 			throw new Error('File.contents can only be a String, a Buffer, a Stream, or null.');
 		}
 
@@ -39,8 +46,8 @@ export default class Bside extends Vinyl {
 
 		let contents = this.contents;
 
-		if (contents.length > 40) {
-			contents = `${contents.slice(0, 37)}...`;
+		if (contents.length > INSPECT_LENGTH) {
+			contents = `${contents.slice(0, INSPECT_LENGTH - 3)}...`;
 		}
 
 		contents = JSON.stringify(contents);

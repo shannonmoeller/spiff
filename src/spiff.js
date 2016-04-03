@@ -6,7 +6,6 @@ import { readFile, outputFile } from 'fs-promise';
 import globby from 'globby';
 import list from 'list-promise';
 import path from 'path';
-import toAbsoluteGlob from 'to-absolute-glob';
 import toGlobParent from 'glob-parent';
 import Bside from './bside';
 
@@ -34,9 +33,9 @@ export function file(options) {
 export function find(patterns, options) {
 	options = options || {};
 
-	const firstPattern = toAbsoluteGlob([].concat(patterns)[0], options);
+	const [firstPattern] = [].concat(patterns);
 	const cwd = options.cwd || process.cwd();
-	const base = options.base || toGlobParent(firstPattern);
+	const base = options.base || path.resolve(cwd, toGlobParent(firstPattern));
 
 	return list(globby(patterns, options))
 		.map(async filename => {
@@ -52,10 +51,8 @@ export function find(patterns, options) {
  * @param {Object} options
  * @return {Bside}
  */
-export function read(patterns, options) {
-	options = options || {};
-
-	if (typeof options === 'string') {
+export function read(patterns, options = {}) {
+	if (options === null || typeof options === 'string') {
 		options = { encoding: options };
 	}
 

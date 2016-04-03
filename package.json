@@ -5,11 +5,10 @@
   "main": "lib/spiff.js",
   "scripts": {
     "coveralls": "nyc report -r text-lcov | coveralls",
-    "build": "rm -rf lib && babel src --out-dir lib",
-    "prepublish": "npm test && npm run build",
-    "pretest": "xo {src,test}/**/*.js",
-    "test": "nyc ava -v",
-    "posttest": "nyc report -r lcov",
+    "build": "rimraf lib && babel src --out-dir lib",
+    "prepublish": "npm run build",
+    "pretest": "xo '{src,test}/**/*.js'",
+    "test": "nyc -r lcov -r text ava -v",
     "watch": "chokidar '{src,test}/**' -c 'npm test'"
   },
   "repository": "shannonmoeller/spiff",
@@ -33,6 +32,7 @@
     "ava": "^0.13.0",
     "babel-cli": "^6.6.5",
     "babel-plugin-async-to-promises": "^1.0.4",
+    "babel-plugin-rewire": "^1.0.0-rc-2",
     "babel-plugin-transform-object-assign": "^6.5.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-polyfill": "^6.7.4",

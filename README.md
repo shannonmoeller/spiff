@@ -16,11 +16,12 @@ import cssnano from 'cssnano';
 import handlebars from 'handlebars';
 import htmlMinifier from 'html-minifier';
 
+// One-to-one transmorgrification
 read('src/**/*.html')
     .map(async file => {
-        const json = await read(file.path + '.json');
+        const [json] = await read(file.path + '.json');
 
-        file.data = JSON.parse(json[0]);
+        file.data = JSON.parse(json);
 
         return file;
     })
@@ -38,6 +39,7 @@ read('src/**/*.html')
     })
     .map(write('dest'));
 
+// Many-to-one transmorgrification
 read('src/styles/*.css')
     .map(async file => {
         const result = await cssnano.process(file.contents);
@@ -53,8 +55,8 @@ read('src/styles/*.css')
     }, file('styles/bundle.css'))
     .then(write('dest'));
 
-read('src/**/*.png', { encoding: null })
-    .map(write('dest'));
+// Binary transmorgrification
+read('src/**/*.png', null).map(write('dest'));
 ```
 
 ## API

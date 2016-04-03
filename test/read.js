@@ -1,44 +1,42 @@
 import test from 'ava';
+import Bside from '../src/bside';
 import { read } from '../src/spiff';
 
-test('should read a file', async assert => {
-	assert.plan(1);
-
-	const expectedContents = /^<File "[^.]+.txt" "foo bar Lorem/;
+test('should read a text file', async assert => {
+	assert.plan(3);
 
 	return read('fixtures/a.txt')
-		.map(file => {
-			file.contents = `bar ${file.contents}`;
+		.map(fileObj => {
+			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj.path.match(/fixtures\/a.txt$/));
+			assert.is(fileObj.inspect(), '<File "a.txt" "a\\n">');
 
-			return file;
-		})
-		.map(file => {
-			file.contents = `foo ${file.contents}`;
-
-			return file;
-		})
-		.map(file => {
-			assert.ok(expectedContents.test(file.inspect()));
+			return fileObj;
 		});
 });
 
-test('should read multiple globbed files', async assert => {
-	assert.plan(6);
+test('should read a binary file', async assert => {
+	assert.plan(3);
 
-	const expectedContents = /^<File "[^.]+.txt" "foo bar/;
+	return read('fixtures/c.gif', null)
+		.map(fileObj => {
+			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj.path.match(/fixtures\/c.gif$/));
+			assert.is(fileObj.inspect(), '<File "c.gif" <Buffer 47 49 46 38 39 61 01 00 01 00 00 ff 00 2c 00 00 00 00 01 00 01 00 00 02 00 3b>>');
+
+			return fileObj;
+		});
+});
+
+test('should read multiple files', async assert => {
+	assert.plan(18);
 
 	return read('fixtures/**/*.txt')
-		.map(file => {
-			file.contents = `bar ${file.contents}`;
+		.map(fileObj => {
+			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj.path.match(/fixtures\/(a|b|(a|b)\/(a|b)).txt$/));
+			assert.ok(fileObj.contents.match(/^(a|b){1,2}\n$/));
 
-			return file;
-		})
-		.map(file => {
-			file.contents = `foo ${file.contents}`;
-
-			return file;
-		})
-		.map(file => {
-			assert.ok(expectedContents.test(file.inspect()));
+			return fileObj;
 		});
 });

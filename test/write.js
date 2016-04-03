@@ -1,40 +1,45 @@
 import test from 'ava';
+import Bside from '../src/bside';
 import { read, write } from '../src/spiff';
 
-test('should a files', async assert => {
-	assert.plan(2);
-
-	const expectedBase = /actual$/;
-	const expectedContents = /^<File "[^.]+.txt" "actual Lorem/;
+test('should write a text file', async assert => {
+	assert.plan(3);
 
 	return read('fixtures/a.txt')
-		.map(file => {
-			file.contents = `actual ${file.contents}`;
-
-			return file;
-		})
 		.map(write('actual'))
-		.map(file => {
-			assert.ok(expectedBase.test(file.base));
-			assert.ok(expectedContents.test(file.inspect()));
+		.map(fileObj => {
+			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj.path.match(/actual\/a.txt$/));
+			assert.is(fileObj.inspect(), '<File "a.txt" "a\\n">');
+
+			return fileObj;
 		});
 });
 
-test('should write multiple globbed files', async assert => {
-	assert.plan(12);
+test('should write a binary file', async assert => {
+	assert.plan(3);
 
-	const expectedBase = /actual$/;
-	const expectedContents = /^<File "[^.]+.txt" "actual/;
+	return read('fixtures/c.gif', null)
+		.map(write('actual'))
+		.map(fileObj => {
+			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj.path.match(/actual\/c.gif$/));
+			assert.is(fileObj.inspect(), '<File "c.gif" <Buffer 47 49 46 38 39 61 01 00 01 00 00 ff 00 2c 00 00 00 00 01 00 01 00 00 02 00 3b>>');
+
+			return fileObj;
+		});
+});
+
+test('should write multiple files', async assert => {
+	assert.plan(18);
 
 	return read('fixtures/**/*.txt')
-		.map(file => {
-			file.contents = `actual ${file.contents}`;
-
-			return file;
-		})
 		.map(write('actual'))
-		.map(file => {
-			assert.ok(expectedBase.test(file.base));
-			assert.ok(expectedContents.test(file.inspect()));
+		.map(fileObj => {
+			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj.path.match(/actual\/(a|b|(a|b)\/(a|b)).txt$/));
+			assert.ok(fileObj.contents.match(/^(a|b){1,2}\n$/));
+
+			return fileObj;
 		});
 });
