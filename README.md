@@ -65,7 +65,7 @@ read('src/**/*.png', null).map(write('dest'));
 
 - `options` `Object`
 
-Creates a [`Bside`](#Bside) file.
+Creates a [`Bside`](#bside) file.
 
 ### find(glob, [options]) : ListPromise\<Array\<Bside\>\>
 
