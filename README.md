@@ -19,9 +19,9 @@ import htmlMinifier from 'html-minifier';
 // One-to-one transmorgrification
 read('src/**/*.html')
     .map(async fileObj => {
-        const [json] = await read(fileObj.path + '.json');
+        const [data] = await read(fileObj.path + '.json');
 
-        fileObj.data = JSON.parse(json.contents);
+        fileObj.data = JSON.parse(data.contents);
 
         return fileObj;
     })
@@ -49,10 +49,10 @@ read('src/styles/*.css')
         return fileObj;
     })
     .filter(fileObj => fileObj.contents.length > 20)
-    .reduce((newFile, oldFile) => {
-        newFile.contents += oldFile.contents;
+    .reduce((bundle, fileObj) => {
+        bundle.contents += fileObj.contents;
 
-        return newFile;
+        return bundle;
     }, file('styles/bundle.css'))
     .then(write('dest'));
 
@@ -81,21 +81,29 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list](
 ### read(glob, [options]) : ListPromise\<BSide\>
 
 - `glob` `String|Array<String>`
-- `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
+- `options` `Null|String|Object` If null or a string, value is used as the encoding when reading. If an object, options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
   - `encoding` `{String}` (default: `'utf8'`) File encoding. Set to `null` to use Buffers instead of Strings.
 
 Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`BSide`](#bside) objects. Reads file contents into memory.
 
+<<<<<<< HEAD
 ### write([dir], [options]) : Function(BSide)
+=======
+### write([dir, [options]]) : Function(Bside)
+>>>>>>> 151591f39a8f7ff99fdcb1b935e63764ed3345ad
 
-- `dir` `String` (default: `file.base`) Optional alternate directory in which to write the files. By default, files will be saved to their current `.path` value.
+- `dir` `String` (default: `file.base`) Optional alternate directory in which to write a file. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
 
+<<<<<<< HEAD
 Generates a callback that accepts a [`BSide`](#bside) file and writes it back to disk, optionally in a different location.
+=======
+Generates a callback that accepts a [`Bside`](#bside) file and writes it to the file system, optionally in a different location. Returns the file so that you may continue iterating after writing.
+>>>>>>> 151591f39a8f7ff99fdcb1b935e63764ed3345ad
 
 ## BSide
 
-A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support. No more need to convert to and from buffers unless you really want to.
+A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support. No more converting to and from buffers unless you really want to.
 
 ```js
 const fileObj = new BSide();
