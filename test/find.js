@@ -1,5 +1,5 @@
 import test from 'ava';
-import Bside from '../src/bside';
+import BSide from '../src/b-side';
 import { find } from '../src/spiff';
 
 test('should find a file', async assert => {
@@ -7,7 +7,7 @@ test('should find a file', async assert => {
 
 	return find('fixtures/a.txt')
 		.map(fileObj => {
-			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj instanceof BSide);
 			assert.ok(fileObj.path.match(/fixtures\/a.txt$/));
 			assert.is(fileObj.contents, null);
 
@@ -20,7 +20,7 @@ test('should find multiple files', async assert => {
 
 	return find('fixtures/**/*.txt')
 		.map(fileObj => {
-			assert.ok(fileObj instanceof Bside);
+			assert.ok(fileObj instanceof BSide);
 			assert.ok(fileObj.path.match(/fixtures\/(a|b|(a|b)\/(a|b)).txt$/));
 			assert.is(fileObj.contents, null);
 

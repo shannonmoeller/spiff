@@ -18,37 +18,37 @@ import htmlMinifier from 'html-minifier';
 
 // One-to-one transmorgrification
 read('src/**/*.html')
-    .map(async file => {
-        const [json] = await read(file.path + '.json');
+    .map(async fileObj => {
+        const [json] = await read(fileObj.path + '.json');
 
-        file.data = JSON.parse(json.contents);
+        fileObj.data = JSON.parse(json.contents);
 
-        return file;
+        return fileObj;
     })
-    .map(file => {
-        const template = handlebars.parse(file.contents);
+    .map(fileObj => {
+        const template = handlebars.parse(fileObj.contents);
 
-        file.contents = template(file.data);
+        fileObj.contents = template(fileObj.data);
 
-        return file;
+        return fileObj;
     })
-    .map(file => {
-        file.contents = htmlMinifier.minify(file.contents);
+    .map(fileObj => {
+        fileObj.contents = htmlMinifier.minify(fileObj.contents);
 
-        return file;
+        return fileObj;
     })
     .map(write('dest'));
 
 // Many-to-one transmorgrification
 read('src/styles/*.css')
-    .map(async file => {
-        const result = await cssnano.process(file.contents);
+    .map(async fileObj => {
+        const result = await cssnano.process(fileObj.contents);
 
-        file.contents = result.css;
+        fileObj.contents = result.css;
 
-        return file;
+        return fileObj;
     })
-    .filter(file => file.contents.length > 20)
+    .filter(fileObj => fileObj.contents.length > 20)
     .reduce((newFile, oldFile) => {
         newFile.contents += oldFile.contents;
 
@@ -62,40 +62,46 @@ read('src/**/*.png', null).map(write('dest'));
 
 ## API
 
-### file(options) : Bside
+### file(options) : BSide
 
 - `options` `Object`
   - `cwd` `String` (default: `process.cwd()`) Current working directory.
   - `base` `String` (default: `cwd`) Base path from which to derive relative paths.
   - `path` `String` File path.
 
-Creates a [`Bside`](#bside) file.
+Creates a [`BSide`](#bside) file.
 
-### find(glob, [options]) : ListPromise\<Bside\>
+### find(glob, [options]) : ListPromise\<BSide\>
 
 - `glob` `String|Array<String>`
 - `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby).
 
-Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`Bside`](#bside) objects. Does not read file contents into memory.
+Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`BSide`](#bside) objects. Does not read file contents into memory.
 
-### read(glob, [options]) : ListPromise\<Bside\>
+### read(glob, [options]) : ListPromise\<BSide\>
 
 - `glob` `String|Array<String>`
 - `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
   - `encoding` `{String}` (default: `'utf8'`) File encoding. Set to `null` to use Buffers instead of Strings.
 
-Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`Bside`](#bside) objects. Reads file contents into memory.
+Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`BSide`](#bside) objects. Reads file contents into memory.
 
-### write([dir], [options]) : Function(Bside)
+### write([dir], [options]) : Function(BSide)
 
 - `dir` `String` (default: `file.base`) Optional alternate directory in which to write the files. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
 
-Generates a callback that accepts a [`Bside`](#bside) file and writes it back to disk, optionally in a different location.
+Generates a callback that accepts a [`BSide`](#bside) file and writes it back to disk, optionally in a different location.
 
-## Bside
+## BSide
 
 A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support. No more need to convert to and from buffers unless you really want to.
+
+```js
+const fileObj = new BSide();
+
+fileObj.contents = 'Lorem ipsum.'; // legit
+```
 
 ### .isString() : Boolean
 

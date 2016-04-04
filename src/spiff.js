@@ -7,12 +7,12 @@ import globby from 'globby';
 import list from 'list-promise';
 import path from 'path';
 import toGlobParent from 'glob-parent';
-import Bside from './bside';
+import BSide from './b-side';
 
 /**
  * @method file
  * @param {Object} options
- * @return {Bside}
+ * @return {BSide}
  */
 export function file(options) {
 	options = options || {};
@@ -21,14 +21,14 @@ export function file(options) {
 		options = { path: options };
 	}
 
-	return new Bside(options);
+	return new BSide(options);
 }
 
 /**
  * @method find
  * @param {String} patterns
  * @param {Object} options
- * @return {Bside}
+ * @return {BSide}
  */
 export function find(patterns, options) {
 	options = options || {};
@@ -49,7 +49,7 @@ export function find(patterns, options) {
  * @method read
  * @param {String} patterns
  * @param {Object} options
- * @return {Bside}
+ * @return {BSide}
  */
 export function read(patterns, options = {}) {
 	if (options === null || typeof options === 'string') {
@@ -72,7 +72,7 @@ export function read(patterns, options = {}) {
  * @method write
  * @param {String} folder
  * @param {Object} options
- * @return {Bside}
+ * @return {BSide}
  */
 export function write(folder, options) {
 	options = options || {};

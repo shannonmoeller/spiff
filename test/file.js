@@ -1,18 +1,18 @@
 import test from 'ava';
-import Bside from '../src/bside';
+import BSide from '../src/b-side';
 import { file } from '../src/spiff';
 
 test('should create a file', async assert => {
 	const fileObj = file();
 
-	assert.ok(fileObj instanceof Bside);
+	assert.ok(fileObj instanceof BSide);
 	assert.is(fileObj.path, undefined);
 });
 
 test('should create a file from a path', async assert => {
 	const fileObj = file('fixtures/a.txt');
 
-	assert.ok(fileObj instanceof Bside);
+	assert.ok(fileObj instanceof BSide);
 	assert.is(fileObj.path, 'fixtures/a.txt');
 	assert.is(fileObj.stem, 'a');
 });
@@ -20,7 +20,7 @@ test('should create a file from a path', async assert => {
 test('should create a file from an object', async assert => {
 	const fileObj = file({ path: 'fixtures/b.txt' });
 
-	assert.ok(fileObj instanceof Bside);
+	assert.ok(fileObj instanceof BSide);
 	assert.is(fileObj.path, 'fixtures/b.txt');
 	assert.is(fileObj.stem, 'b');
 });
