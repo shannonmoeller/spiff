@@ -86,20 +86,12 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list](
 
 Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`BSide`](#bside) objects. Reads file contents into memory.
 
-<<<<<<< HEAD
-### write([dir], [options]) : Function(BSide)
-=======
-### write([dir, [options]]) : Function(Bside)
 >>>>>>> 151591f39a8f7ff99fdcb1b935e63764ed3345ad
 
 - `dir` `String` (default: `file.base`) Optional alternate directory in which to write a file. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
 
-<<<<<<< HEAD
-Generates a callback that accepts a [`BSide`](#bside) file and writes it back to disk, optionally in a different location.
-=======
-Generates a callback that accepts a [`Bside`](#bside) file and writes it to the file system, optionally in a different location. Returns the file so that you may continue iterating after writing.
->>>>>>> 151591f39a8f7ff99fdcb1b935e63764ed3345ad
+Generates a callback that accepts a [`BSide`](#bside) file and writes it to the file system, optionally in a different location. Returns the file so that you may continue iterating after writing.
 
 ## BSide
 
