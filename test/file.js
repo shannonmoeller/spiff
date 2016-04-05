@@ -50,5 +50,5 @@ test('should be picky about content types', async assert => {
 		base: 'fixtures',
 		path: 'fixtures/e.txt',
 		contents: 42
-	}), /File.contents can only be a String,/);
+	}), /File.contents can only be a String, /);
 });
