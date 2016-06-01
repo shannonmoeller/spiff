@@ -1,54 +1,37 @@
-import test from 'ava';
-import BSide from '../src/b-side';
-import { file } from '../src/spiff';
+import test from 'blue-tape';
+import { file } from '..';
 
-test('should create a file', async assert => {
+test('should create a file', async t => {
+	process.chdir(__dirname);
+
 	const fileObj = file();
 
-	assert.ok(fileObj instanceof BSide);
-	assert.is(fileObj.path, undefined);
+	t.is(fileObj.path, undefined);
 });
 
-test('should create a file from a path', async assert => {
+test('should create a file from a path', async t => {
+	process.chdir(__dirname);
+
 	const fileObj = file('fixtures/a.txt');
 
-	assert.ok(fileObj instanceof BSide);
-	assert.is(fileObj.path, 'fixtures/a.txt');
-	assert.is(fileObj.stem, 'a');
+	t.is(fileObj.path, 'fixtures/a.txt');
+	t.is(fileObj.stem, 'a');
 });
 
-test('should create a file from an object', async assert => {
+test('should create a file from an object', async t => {
+	process.chdir(__dirname);
+
 	const fileObj = file({ path: 'fixtures/b.txt' });
 
-	assert.ok(fileObj instanceof BSide);
-	assert.is(fileObj.path, 'fixtures/b.txt');
-	assert.is(fileObj.stem, 'b');
+	t.is(fileObj.path, 'fixtures/b.txt');
+	t.is(fileObj.stem, 'b');
 });
 
-test('should pretty-print buffer contents', async assert => {
-	const fileObj = file({
-		base: 'fixtures',
-		path: 'fixtures/c.txt',
-		contents: new Buffer('foo')
-	});
+test('should create a file with content', async t => {
+	process.chdir(__dirname);
 
-	assert.is(fileObj.inspect(), '<File "c.txt" <Buffer 66 6f 6f>>');
-});
+	const fileObj = file('foo.txt', 'bar');
 
-test('should pretty-print string contents', async assert => {
-	const fileObj = file({
-		base: 'fixtures',
-		path: 'fixtures/d.txt',
-		contents: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-	});
-
-	assert.is(fileObj.inspect(), '<File "d.txt" "Lorem ipsum dolor sit amet, consectet...">');
-});
-
-test('should be picky about content types', async assert => {
-	assert.throws(() => file({
-		base: 'fixtures',
-		path: 'fixtures/e.txt',
-		contents: 42
-	}), /File.contents can only be a String,/);
+	t.is(fileObj.path, 'foo.txt');
+	t.is(fileObj.contents, 'bar');
 });

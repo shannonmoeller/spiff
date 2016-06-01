@@ -1,41 +1,40 @@
-import test from 'ava';
-import BSide from '../src/b-side';
-import { read } from '../src/spiff';
+import test from 'blue-tape';
+import { read } from '..';
 
-test('should read a text file', async assert => {
-	assert.plan(3);
+test('should read a text file', async t => {
+	process.chdir(__dirname);
+	t.plan(2);
 
 	return read('fixtures/a.txt')
 		.map(fileObj => {
-			assert.ok(fileObj instanceof BSide);
-			assert.regex(fileObj.path, /fixtures[\\\/]a.txt$/);
-			assert.is(fileObj.inspect(), '<File "a.txt" "a\\n">');
+			t.equal((/fixtures[\\\/]a.txt$/).test(fileObj.path), true);
+			t.equal(fileObj.inspect(), '<File "a.txt" "a\\n">');
 
 			return fileObj;
 		});
 });
 
-test('should read a binary file', async assert => {
-	assert.plan(3);
+test('should read a binary file', async t => {
+	process.chdir(__dirname);
+	t.plan(2);
 
 	return read('fixtures/c.gif', null)
 		.map(fileObj => {
-			assert.ok(fileObj instanceof BSide);
-			assert.regex(fileObj.path, /fixtures[\\\/]c.gif$/);
-			assert.is(fileObj.inspect(), '<File "c.gif" <Buffer 47 49 46 38 39 61 01 00 01 00 00 ff 00 2c 00 00 00 00 01 00 01 00 00 02 00 3b>>');
+			t.equal((/fixtures[\\\/]c.gif$/).test(fileObj.path), true);
+			t.equal(fileObj.inspect(), '<File "c.gif" <Buffer 47 49 46 38 39 61 01 00 01 00 00 ff 00 2c 00 00 00 00 01 00 01 00 00 02 00 3b>>');
 
 			return fileObj;
 		});
 });
 
-test('should read multiple files', async assert => {
-	assert.plan(18);
+test('should read multiple files', async t => {
+	process.chdir(__dirname);
+	t.plan(12);
 
 	return read('fixtures/**/*.txt')
 		.map(fileObj => {
-			assert.ok(fileObj instanceof BSide);
-			assert.regex(fileObj.path, /fixtures[\\\/](a|b|(a|b)[\\\/](a|b)).txt$/);
-			assert.regex(fileObj.contents, /^(a|b){1,2}\n$/);
+			t.equal((/fixtures[\\\/](a|b|(a|b)[\\\/](a|b)).txt$/).test(fileObj.path), true);
+			t.equal((/^(a|b){1,2}\n$/).test(fileObj.contents), true);
 
 			return fileObj;
 		});

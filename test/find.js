@@ -1,28 +1,37 @@
-import test from 'ava';
-import BSide from '../src/b-side';
-import { find } from '../src/spiff';
+import test from 'blue-tape';
+import { find } from '..';
 
-test('should find a file', async assert => {
-	assert.plan(3);
+test('should not find a file', async t => {
+	process.chdir(__dirname);
+	t.plan(0);
+
+	return find()
+		.map(fileObj => {
+			t.fail();
+		});
+});
+
+test('should find a file', async t => {
+	process.chdir(__dirname);
+	t.plan(2);
 
 	return find('fixtures/a.txt')
 		.map(fileObj => {
-			assert.ok(fileObj instanceof BSide);
-			assert.regex(fileObj.path, /fixtures[\\\/]a.txt$/);
-			assert.is(fileObj.contents, null);
+			t.equal((/fixtures[\\\/]a.txt$/).test(fileObj.path), true);
+			t.equal(fileObj.contents, null);
 
 			return fileObj;
 		});
 });
 
-test('should find multiple files', async assert => {
-	assert.plan(18);
+test('should find multiple files', async t => {
+	process.chdir(__dirname);
+	t.plan(12);
 
 	return find('fixtures/**/*.txt')
 		.map(fileObj => {
-			assert.ok(fileObj instanceof BSide);
-			assert.regex(fileObj.path, /fixtures[\\\/](a|b|(a|b)[\\\/](a|b)).txt$/);
-			assert.is(fileObj.contents, null);
+			t.equal((/fixtures[\\\/](a|b|(a|b)[\\\/](a|b)).txt$/).test(fileObj.path), true);
+			t.equal(fileObj.contents, null);
 
 			return fileObj;
 		});
