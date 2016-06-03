@@ -20,7 +20,7 @@
     "list-promise": "^2.0.1",
     "object-assign": "^4.1.0",
     "trash": "^3.4.1",
-    "vinyl-rw": "^0.1.1"
+    "vinyl-rw": "^1.0.1"
   },
   "devDependencies": {
     "blue-tape": "^0.2.0",
