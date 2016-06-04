@@ -23,16 +23,12 @@
     "vinyl-rw": "^1.0.2"
   },
   "devDependencies": {
-    "blue-tape": "^0.2.0",
-    "coveralls": "^2.11.9",
-    "esprev": "^3.1.1",
-    "nyc": "^6.4.4",
-    "tap-difflet": "^0.4.0"
+    "whim": "^3.0.6"
   },
   "scripts": {
-    "coveralls": "nyc report -r text-lcov | coveralls",
-    "test": "nyc -r html -r text npm run test-node",
-    "test-node": "es ./node_modules/.bin/tape 'test/*.js' | tap-difflet"
+    "coveralls": "whim test report",
+    "pretest": "whim lint",
+    "test": "whim test"
   },
   "engines": {
     "node": ">= 0.12"
