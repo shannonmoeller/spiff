@@ -17,10 +17,10 @@
   "dependencies": {
     "glob-parent": "^2.0.0",
     "globby": "^4.1.0",
-    "list-promise": "^2.0.1",
+    "list-promise": "^2.0.2",
     "object-assign": "^4.1.0",
     "trash": "^3.4.1",
-    "vinyl-rw": "^1.0.1"
+    "vinyl-rw": "^1.0.2"
   },
   "devDependencies": {
     "blue-tape": "^0.2.0",
