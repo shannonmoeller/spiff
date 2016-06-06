@@ -37,7 +37,7 @@ read('src/**/*.html')
 
 // Many-to-one transmorgrification
 read('src/styles/*.css')
-    .mapProp(async fileObj => {
+    .map(async fileObj => {
         const result = await cssnano.process(fileObj.contents);
 
         fileObj.contents = result.css;
