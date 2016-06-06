@@ -32,16 +32,12 @@ read('src/**/*.html')
 
         return fileObj;
     })
-    .map(fileObj => {
-        fileObj.contents = htmlMinifier.minify(fileObj.contents);
-
-        return fileObj;
-    })
+    .mapProp('contents', x => htmlMinifier.minify(x))
     .map(write('dest'));
 
 // Many-to-one transmorgrification
 read('src/styles/*.css')
-    .map(async fileObj => {
+    .mapProp(async fileObj => {
         const result = await cssnano.process(fileObj.contents);
 
         fileObj.contents = result.css;
@@ -62,56 +58,47 @@ read('src/**/*.png', null).map(write('dest'));
 
 ## API
 
-### file(options) : BSide
+### file([options, [contents]]) : VinylRW
 
 - `options` `Object`
   - `cwd` `String` (default: `process.cwd()`) Current working directory.
   - `base` `String` (default: `cwd`) Base path from which to derive relative paths.
   - `path` `String` File path.
+- `contents` `{String|Buffer|Stream}` - (default: `null`) File contents.
 
-Creates a [`BSide`](#bside) file.
+Creates a [`VinylRW`][vrw] file.
 
-### find(glob, [options]) : ListPromise\<BSide\>
-
-- `glob` `String|Array<String>`
-- `options` `Object` Options for [`globby`](https://github.com/sindresorhus/globby).
-
-Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`BSide`](#bside) objects. Does not read file contents into memory.
-
-### read(glob, [options]) : ListPromise\<BSide\>
+### find(glob, [options]) : ListPromise\<VinylRW\>
 
 - `glob` `String|Array<String>`
-- `options` `Null|String|Object` If null or a string, value is used as the encoding when reading. If an object, options for [`globby`](https://github.com/sindresorhus/globby) and `fs.readFile`.
+- `options` `Object` Options for [`globby`][globby].
+
+Finds files matching a glob pattern and provides them as a [Promise-aware list][list] of [`VinylRW`][vrw] objects. Does not read file contents into memory.
+
+### read(glob, [options]) : ListPromise\<VinylRW\>
+
+- `glob` `String|Array<String>`
+- `options` `Null|String|Object` If null or a string, value is used as the encoding when reading. If an object, options for [`globby`][globby] and `fs.readFile`.
   - `encoding` `{String}` (default: `'utf8'`) File encoding. Set to `null` to use Buffers instead of Strings.
 
-Finds files matching a glob pattern and provides them as a [Promise-aware list](https://github.com/shannonmoeller/list-promise) of [`BSide`](#bside) objects. Reads file contents into memory.
+Finds files matching a glob pattern and provides them as a [Promise-aware list][list] of [`VinylRW`][vrw] objects. Reads file contents into memory.
 
 ### write([dir, [options]]) : Function
 
 - `dir` `String` (default: `file.base`) Optional alternate directory in which to write a file. By default, files will be saved to their current `.path` value.
 - `options` `Object` Options for `fs.writeFile`.
 
-Generates a callback that accepts a [`BSide`](#bside) file and writes it to the file system, optionally in a different location.
+Returns a callback that accepts a [`VinylRW`][vrw] file and writes it to the file system, optionally in a different location.
 
-#### callback(fileObj) : BSide
+#### callback(fileObj) : VinylRW
 
-- `fileObj` `BSide` The [`BSide`](#bside) file to be written.
+- `fileObj` `VinylRW` The [`VinylRW`][vrw] file to be written.
 
 Writes a file to the file system based on the file's path property. Returns the file so that you may continue iterating after writing.
 
-## BSide
-
-A [vinyl file](https://github.com/gulpjs/vinyl) with first-class string support. No more converting to and from buffers unless you really want to.
-
-```js
-const fileObj = new BSide();
-
-fileObj.contents = 'Lorem ipsum.'; // legit
-```
-
-### .isString() : Boolean
-
-Returns whether or not the current file contents are a string.
+[globby](https://github.com/sindresorhus/globby)
+[list](https://github.com/shannonmoeller/list-promise)
+[vrw](https://github.com/shannonmoeller/vinyl-rw)
 
 ## Contribute
 
