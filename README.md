@@ -96,9 +96,9 @@ Returns a callback that accepts a [`VinylRW`][vrw] file and writes it to the fil
 
 Writes a file to the file system based on the file's path property. Returns the file so that you may continue iterating after writing.
 
-[globby](https://github.com/sindresorhus/globby)
-[list](https://github.com/shannonmoeller/list-promise)
-[vrw](https://github.com/shannonmoeller/vinyl-rw)
+[globby]: https://github.com/sindresorhus/globby
+[list]:   https://github.com/shannonmoeller/list-promise
+[vrw]:    https://github.com/shannonmoeller/vinyl-rw
 
 ## Contribute
 
