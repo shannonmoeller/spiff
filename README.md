@@ -83,6 +83,12 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list][
 
 Finds files matching a glob pattern and provides them as a [Promise-aware list][list] of [`VinylRW`][vrw] objects. Reads file contents into memory.
 
+### remove(glob) : Function
+
+- `glob` `String|Array<String>`
+
+Sends files and directories to the system's [`trash`][trash].
+
 ### write([dir, [options]]) : Function
 
 - `dir` `String` (default: `file.base`) Optional alternate directory in which to write a file. By default, files will be saved to their current `.path` value.
@@ -98,6 +104,7 @@ Writes a file to the file system based on the file's path property. Returns the 
 
 [globby]: https://github.com/sindresorhus/globby
 [list]:   https://github.com/shannonmoeller/list-promise
+[trash]:  https://github.com/sindresorhus/trash
 [vrw]:    https://github.com/shannonmoeller/vinyl-rw
 
 ## Contribute
