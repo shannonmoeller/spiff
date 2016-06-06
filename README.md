@@ -83,7 +83,7 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list][
 
 Finds files matching a glob pattern and provides them as a [Promise-aware list][list] of [`VinylRW`][vrw] objects. Reads file contents into memory.
 
-### remove(glob) : Function
+### remove(glob) : Promise
 
 - `glob` `String|Array<String>`
 
