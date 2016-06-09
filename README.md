@@ -1,4 +1,4 @@
-# `spiff`
+[![spiff](https://cdn.rawgit.com/shannonmoeller/spiff/b05a785/logo.svg)](https://github.com/shannonmoeller/spiff#readme)
 
 [![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Chat][gitter-img]][gitter-url] [![Tip][tip-img]][tip-url]
 
