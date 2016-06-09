@@ -1,6 +1,6 @@
 {
   "name": "spiff",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Promise-aware file-system adapter and transmorgrifier.",
   "license": "MIT",
   "repository": "shannonmoeller/spiff",
