@@ -1,6 +1,6 @@
 [![spiff](https://cdn.rawgit.com/shannonmoeller/spiff/48bf567/media/logo.svg)](https://github.com/shannonmoeller/spiff#readme)
 
-[![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Chat][gitter-img]][gitter-url] [![Tip][tip-img]][tip-url]
+[![NPM version][npm-img]][npm-url] [![Downloads][downloads-img]][npm-url] [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Tip][tip-img]][tip-url]
 
 Promise-aware file-system adapter and transmorgrifier.
 
@@ -126,8 +126,6 @@ Licensed under [MIT](http://shannonmoeller.com/mit.txt)
 [coveralls-img]: http://img.shields.io/coveralls/shannonmoeller/spiff/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/shannonmoeller/spiff
 [downloads-img]: http://img.shields.io/npm/dm/spiff.svg?style=flat-square
-[gitter-img]:    http://img.shields.io/badge/gitter-join_chat-1dce73.svg?style=flat-square
-[gitter-url]:    https://gitter.im/shannonmoeller/shannonmoeller
 [npm-img]:       http://img.shields.io/npm/v/spiff.svg?style=flat-square
 [npm-url]:       https://npmjs.org/package/spiff
 [travis-img]:    http://img.shields.io/travis/shannonmoeller/spiff.svg?style=flat-square
