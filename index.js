@@ -15,18 +15,18 @@ function file(options, contents) {
 }
 
 function find(globs, options) {
-	globs = concat.call([], globs || []);
-	options = options || {};
+	const localGlobs = concat.call([], globs || []);
+	const localOptions = options || {};
 
-	var cwd = options.cwd || process.cwd();
-	var base = options.base || path.resolve(cwd, globParent(globs[0]));
+	var cwd = localOptions.cwd || process.cwd();
+	var base = localOptions.base || path.resolve(cwd, globParent(localGlobs[0]));
 
-	return list(globby(globs, options))
+	return list(globby(localGlobs, localOptions))
 		.map(function (filepath) {
 			return new File({
 				cwd: cwd,
 				base: base,
-				path: path.resolve(cwd, filepath)
+				path: path.resolve(cwd, filepath),
 			});
 		});
 }
@@ -39,16 +39,16 @@ function read(globs, options) {
 }
 
 function remove(globs) {
-	globs = concat.call([], globs || []);
+	const localGlobs = concat.call([], globs || []);
 
-	return trash(globs);
+	return trash(localGlobs);
 }
 
 function write(folder, options) {
-	options = assign({}, { base: folder }, options);
+	const localOptions = assign({}, { base: folder }, options);
 
 	return function (fileObj) {
-		return fileObj.write(options);
+		return fileObj.write(localOptions);
 	};
 }
 

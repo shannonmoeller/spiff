@@ -1,4 +1,4 @@
-import test from 'blue-tape';
+import test from 'whim/test';
 import { find } from '..';
 
 test('should not find a file', async t => {
@@ -8,6 +8,8 @@ test('should not find a file', async t => {
 	return find()
 		.map(fileObj => {
 			t.fail();
+
+			return fileObj;
 		});
 });
 

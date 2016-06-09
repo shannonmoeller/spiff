@@ -1,4 +1,4 @@
-import test from 'blue-tape';
+import test from 'whim/test';
 import { file } from '..';
 
 test('should create a file', async t => {

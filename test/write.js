@@ -1,4 +1,4 @@
-import test from 'blue-tape';
+import test from 'whim/test';
 import { read, write } from '..';
 
 test('should write a text file', async t => {
@@ -8,6 +8,7 @@ test('should write a text file', async t => {
 	return read('fixtures/a.txt')
 		.map(f => {
 			f.contents = f.contents.toUpperCase();
+
 			return f;
 		})
 		.map(write('actual'))
@@ -26,8 +27,11 @@ test('should write a binary file', async t => {
 	return read('fixtures/c.gif', null)
 		.map(write('actual'))
 		.map(fileObj => {
+			const expected = '<File "c.gif" <Buffer 47 49 46 38 39 61 01 '
+				+ '00 01 00 00 ff 00 2c 00 00 00 00 01 00 01 00 00 02 00 3b>>';
+
 			t.equal((/actual[\\\/]c.gif$/).test(fileObj.path), true);
-			t.equal(fileObj.inspect(), '<File "c.gif" <Buffer 47 49 46 38 39 61 01 00 01 00 00 ff 00 2c 00 00 00 00 01 00 01 00 00 02 00 3b>>');
+			t.equal(fileObj.inspect(), expected);
 
 			return fileObj;
 		});
