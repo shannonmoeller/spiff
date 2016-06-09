@@ -23,7 +23,7 @@
     "vinyl-rw": "^1.0.2"
   },
   "devDependencies": {
-    "whim": "^3.0.10"
+    "whim": "^3.0.11"
   },
   "scripts": {
     "coveralls": "whim test report",
