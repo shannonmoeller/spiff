@@ -15,8 +15,8 @@ function file(options, contents) {
 }
 
 function find(globs, options) {
-	const localGlobs = concat.call([], globs || []);
-	const localOptions = options || {};
+	var localGlobs = concat.call([], globs || []);
+	var localOptions = options || {};
 
 	var cwd = localOptions.cwd || process.cwd();
 	var base = localOptions.base || path.resolve(cwd, globParent(localGlobs[0]));
@@ -39,13 +39,13 @@ function read(globs, options) {
 }
 
 function remove(globs) {
-	const localGlobs = concat.call([], globs || []);
+	var localGlobs = concat.call([], globs || []);
 
 	return trash(localGlobs);
 }
 
 function write(folder, options) {
-	const localOptions = assign({}, { base: folder }, options);
+	var localOptions = assign({}, { base: folder }, options);
 
 	return function (fileObj) {
 		return fileObj.write(localOptions);
