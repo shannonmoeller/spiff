@@ -1,4 +1,4 @@
-import test from 'whim/test';
+import test from 'whim/lib/test';
 import { read } from '..';
 
 test('should read a text file', async t => {

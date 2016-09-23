@@ -1,4 +1,4 @@
-import test from 'whim/test';
+import test from 'whim/lib/test';
 import { find } from '..';
 
 test('should not find a file', async t => {
