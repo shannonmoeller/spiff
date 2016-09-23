@@ -15,7 +15,7 @@
     "*.js"
   ],
   "dependencies": {
-    "glob-parent": "^2.0.0",
+    "glob-parent": "^3.0.0",
     "globby": "^4.1.0",
     "list-promise": "^2.1.1",
     "object-assign": "^4.1.0",
