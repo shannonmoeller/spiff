@@ -19,7 +19,7 @@
     "globby": "^4.1.0",
     "list-promise": "^2.1.1",
     "object-assign": "^4.1.0",
-    "trash": "^3.4.1",
+    "trash": "^4.0.0",
     "vinyl-rw": "^1.0.2"
   },
   "devDependencies": {
