@@ -23,7 +23,7 @@
     "vinyl-rw": "^2.0.1"
   },
   "devDependencies": {
-    "whim": "^4.1.2"
+    "whim": "^4.1.3"
   },
   "scripts": {
     "pretest": "whim lint",
