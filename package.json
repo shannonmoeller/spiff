@@ -17,7 +17,7 @@
   "dependencies": {
     "glob-parent": "^3.0.0",
     "globby": "^6.0.0",
-    "list-promise": "^2.1.1",
+    "list-promise": "^2.1.2",
     "object-assign": "^4.1.0",
     "trash": "^4.0.0",
     "vinyl-rw": "^2.0.1"
