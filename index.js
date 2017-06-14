@@ -24,20 +24,16 @@ function find(globs, options) {
 		path.resolve(cwd, globParent(localGlobs[0] || ''));
 
 	return list(globby(localGlobs, localOptions))
-		.map(filepath => {
-			return new File({
-				cwd,
-				base,
-				path: path.resolve(cwd, filepath)
-			});
-		});
+		.map(filepath => new File({
+			cwd,
+			base,
+			path: path.resolve(cwd, filepath)
+		}));
 }
 
 function read(globs, options) {
 	return find(globs, options)
-		.map(fileObj => {
-			return fileObj.read(options);
-		});
+		.map(fileObj => fileObj.read(options));
 }
 
 function remove(globs) {
@@ -49,9 +45,7 @@ function remove(globs) {
 function write(folder, options) {
 	const localOptions = assign({}, {base: folder}, options);
 
-	return fileObj => {
-		return fileObj.write(localOptions);
-	};
+	return fileObj => fileObj.write(localOptions);
 }
 
 exports.file = file;
