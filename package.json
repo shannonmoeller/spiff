@@ -1,6 +1,6 @@
 {
   "name": "spiff",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Promise-aware file-system adapter and transmorgrifier.",
   "scripts": {
     "report": "nyc report -r text-lcov | coveralls",
