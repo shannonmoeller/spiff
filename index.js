@@ -5,7 +5,6 @@ const path = require('path');
 const globParent = require('glob-parent');
 const globby = require('globby');
 const list = require('list-promise');
-const normalize = require('normalize-path');
 const assign = require('object-assign');
 const trash = require('trash');
 const File = require('vinyl-rw');
@@ -29,7 +28,7 @@ function find(globs, options) {
 			return new File({
 				cwd,
 				base,
-				path: normalize(path.resolve(cwd, filepath))
+				path: path.resolve(cwd, filepath)
 			});
 		});
 }

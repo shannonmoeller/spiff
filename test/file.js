@@ -16,7 +16,7 @@ test('should create a file from a path', t => {
 
 	const fileObj = file('fixtures/a.txt');
 
-	t.is(fileObj.path, 'fixtures/a.txt');
+	t.is(/fixtures[\\/]a.txt/.test(fileObj.path), true);
 	t.is(fileObj.stem, 'a');
 });
 
@@ -26,7 +26,7 @@ test('should create a file from an object', t => {
 
 	const fileObj = file({path: 'fixtures/b.txt'});
 
-	t.is(fileObj.path, 'fixtures/b.txt');
+	t.is(/fixtures[\\/]b.txt/.test(fileObj.path), true);
 	t.is(fileObj.stem, 'b');
 });
 
