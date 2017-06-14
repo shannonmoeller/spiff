@@ -29,7 +29,7 @@
   "dependencies": {
     "glob-parent": "^3.1.0",
     "globby": "^6.1.0",
-    "list-promise": "^2.2.1",
+    "list-promise": "^3.0.0",
     "object-assign": "^4.1.1",
     "trash": "^4.0.1",
     "vinyl-rw": "^2.0.1"

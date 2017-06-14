@@ -4,13 +4,12 @@ const path = require('path');
 
 const globParent = require('glob-parent');
 const globby = require('globby');
-const listPromise = require('list-promise');
+const list = require('list-promise');
 const assign = require('object-assign');
 const trash = require('trash');
 const File = require('vinyl-rw');
 
 const concat = Array.prototype.concat;
-const list = listPromise.default;
 
 function file(options, contents) {
 	return new File(options, contents);
