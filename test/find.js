@@ -1,7 +1,7 @@
-import test from 'whim/lib/test';
-import { find } from '..';
+import test from 'ava';
+import {find} from '..';
 
-test('should not find a file', async t => {
+test('should not find a file', t => {
 	process.chdir(__dirname);
 	t.plan(0);
 
@@ -13,27 +13,27 @@ test('should not find a file', async t => {
 		});
 });
 
-test('should find a file', async t => {
+test('should find a file', t => {
 	process.chdir(__dirname);
 	t.plan(2);
 
 	return find('fixtures/a.txt')
 		.map(fileObj => {
-			t.equal((/fixtures[\\\/]a.txt$/).test(fileObj.path), true);
-			t.equal(fileObj.contents, null);
+			t.is((/fixtures[\\/]a.txt$/).test(fileObj.path), true);
+			t.is(fileObj.contents, null);
 
 			return fileObj;
 		});
 });
 
-test('should find multiple files', async t => {
+test('should find multiple files', t => {
 	process.chdir(__dirname);
 	t.plan(12);
 
 	return find('fixtures/**/*.txt')
 		.map(fileObj => {
-			t.equal((/fixtures[\\\/](a|b|(a|b)[\\\/](a|b)).txt$/).test(fileObj.path), true);
-			t.equal(fileObj.contents, null);
+			t.is((/fixtures[\\/](a|b|(a|b)[\\/](a|b)).txt$/).test(fileObj.path), true);
+			t.is(fileObj.contents, null);
 
 			return fileObj;
 		});

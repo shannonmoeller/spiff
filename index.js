@@ -1,53 +1,56 @@
 'use strict';
 
-var File = require('vinyl-rw');
-var assign = require('object-assign');
-var globParent = require('glob-parent');
-var globby = require('globby');
-var list = require('list-promise');
-var path = require('path');
-var trash = require('trash');
+const path = require('path');
 
-var concat = Array.prototype.concat;
+const globParent = require('glob-parent');
+const globby = require('globby');
+const listPromise = require('list-promise');
+const assign = require('object-assign');
+const trash = require('trash');
+const File = require('vinyl-rw');
+
+const concat = Array.prototype.concat;
+const list = listPromise.default;
 
 function file(options, contents) {
 	return new File(options, contents);
 }
 
 function find(globs, options) {
-	var localGlobs = concat.call([], globs || []);
-	var localOptions = options || {};
+	const localGlobs = concat.call([], globs || []);
+	const localOptions = options || {};
 
-	var cwd = localOptions.cwd || process.cwd();
-	var base = localOptions.base || path.resolve(cwd, globParent(localGlobs[0]));
+	const cwd = localOptions.cwd || process.cwd();
+	const base = localOptions.base ||
+		path.resolve(cwd, globParent(localGlobs[0]));
 
 	return list(globby(localGlobs, localOptions))
-		.map(function (filepath) {
+		.map(filepath => {
 			return new File({
-				cwd: cwd,
-				base: base,
-				path: path.resolve(cwd, filepath),
+				cwd,
+				base,
+				path: path.resolve(cwd, filepath)
 			});
 		});
 }
 
 function read(globs, options) {
 	return find(globs, options)
-		.map(function (fileObj) {
+		.map(fileObj => {
 			return fileObj.read(options);
 		});
 }
 
 function remove(globs) {
-	var localGlobs = concat.call([], globs || []);
+	const localGlobs = concat.call([], globs || []);
 
 	return trash(localGlobs);
 }
 
 function write(folder, options) {
-	var localOptions = assign({}, { base: folder }, options);
+	const localOptions = assign({}, {base: folder}, options);
 
-	return function (fileObj) {
+	return fileObj => {
 		return fileObj.write(localOptions);
 	};
 }
