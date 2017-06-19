@@ -1,4 +1,4 @@
-[![spiff](https://cdn.rawgit.com/shannonmoeller/spiff/48bf567/media/logo.svg)](https://github.com/shannonmoeller/spiff#readme)
+[![spiff](https://cdn.rawgit.com/shannonmoeller/spiff/a7c17c6/media/logo.svg)](https://github.com/shannonmoeller/spiff#readme)
 
 [![NPM version][npm-img]][npm-url]
 [![Downloads][downloads-img]][npm-url]
