@@ -91,8 +91,7 @@ read('src/styles/**/*.css')
 Creates a new [`VinylRW`][vrw] file.
 
 ```js
-file('README.md', '# TODO')
-    .write('dest');
+file('README.md', '# TODO');
 ```
 
 ### find(glob, [options]) : ListPromise\<VinylRW\>
