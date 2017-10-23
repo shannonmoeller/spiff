@@ -20,7 +20,7 @@ The simplest usage of `spiff` copies files from one location to another.
 import { read, write } from 'spiff';
 
 read('src/styles/**/*.css')
-    .then(write('dest/styles'));
+    .map(write('dest/styles'));
 ```
 
 That's all well and good, but it's not very interesting. Let's change the files.
@@ -37,7 +37,7 @@ read('src/styles/**/*.css')
         return cssFile;
     })
 
-    .then(write('dest/styles'));
+    .map(write('dest/styles'));
 ```
 
 That did the trick. But look at all that code just to change one property. We can do better.
@@ -50,7 +50,7 @@ read('src/styles/**/*.css')
     // Replace all whitespace with a single space.
     .mapProp('contents', x => x.replace(/\s+/, ' '))
 
-    .then(write('dest/styles'));
+    .map(write('dest/styles'));
 ```
 
 Now we're talking! But we're spitting out each file individually. Let's bundle them.
@@ -75,8 +75,24 @@ read('src/styles/**/*.css')
         file('bundle.css')
     )
 
-    .then(write('dest/styles'));
+    .map(write('dest/styles'));
 ```
+
+### async/await
+
+The `find` and `read` functions return special type of Promise object called a [`ListPromise`][list]. These lists provide a means of iterating through items with maximum concurrency, but are ultimately just Promises. Therefore, you can await the results.
+
+```js
+async function bundleAssets() {
+    await read('src/scripts/**/*.js')
+        .map(write('dest/scripts'));
+
+    await read('src/styles/**/*.css')
+        .map(write('dest/styles'));
+}
+```
+
+See the [`ListPromise` documentation][list] for more information on the available iteration methods.
 
 ## API
 
@@ -104,7 +120,7 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list][
 ```js
 find('src/images/**/*.{jpg,png}')
     .map(x => x.path)
-    .then(console.log);
+    .map(console.log);
 ```
 
 ### read(glob, [options]) : ListPromise\<VinylRW\>
@@ -118,15 +134,15 @@ Finds files matching a glob pattern and provides them as a [Promise-aware list][
 ```js
 // text files
 read('src/styles/**/*.css')
-    .then(write('dest/styles'));
+    .map(write('dest/styles'));
 
 // special encoding
 read('src/data/**/*.csv', 'ucs2')
-    .then(write('dest/data'));
+    .map(write('dest/data'));
 
 // binary files
 read('src/images/**/*.png', null)
-    .then(write('dest/images'));
+    .map(write('dest/images'));
 ```
 
 ### remove(glob) : Promise
@@ -154,7 +170,7 @@ Writes a file to the file system based on the file's path property. Returns the 
 
 ```js
 read('src/styles/**/*.css')
-    .then(write('dest/styles'));
+    .map(write('dest/styles'));
 ```
 
 [globby]: https://github.com/sindresorhus/globby#readme
