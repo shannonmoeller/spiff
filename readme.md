@@ -80,7 +80,7 @@ read('src/styles/**/*.css')
 
 ### async/await
 
-The `find` and `read` functions return special type of Promise object called a [`ListPromise`][list]. These lists provide a means of iterating through items with maximum concurrency, but are ultimately just Promises. Therefore, you can await the results.
+The `find` and `read` functions return a special type of Promise object called a [`ListPromise`][list]. These lists provide a means of iterating through items with maximum concurrency, but are ultimately just Promises. Therefore, you can await the results.
 
 ```js
 async function bundleAssets() {
